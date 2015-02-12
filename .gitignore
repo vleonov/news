@@ -7,3 +7,4 @@ www/previews/*
 www/thumbs/*
 www/tmp/*
 sql/03.data.sql
+sql/03.data.sql.gz
