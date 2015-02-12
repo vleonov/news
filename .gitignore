@@ -1,0 +1,9 @@
+.idea
+etc/config.php
+dict/*
+var/tmp/*
+www/files/*
+www/previews/*
+www/thumbs/*
+www/tmp/*
+sql/03.data.sql

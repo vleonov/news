@@ -1,0 +1,125 @@
+html, body {
+    height: 100%;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: normal;
+}
+body {
+    padding-top: 50px;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+a {
+    color: #333333;
+    text-decoration: none;
+    border-bottom: 1px solid #c0c0c0;;
+}
+    a.no-underline {
+        border-bottom: 0;
+    }
+
+    a:focus,
+    a:active,
+    a:hover {
+        color: #ff0000;
+        text-decoration: none;
+        border-bottom: 1px solid #f0b2b2;
+    }
+
+.modal-rz {
+    min-width: 800px;
+}
+
+#left-bar {
+    background-color: #eee;
+    height: 100%;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    top: 50px;
+    width: 270px;
+}
+
+#content-bar {
+    margin-left: 330px;
+    padding: 27px 30px 0 30px;
+}
+
+#news-bar {
+    max-width: 550px;
+    padding-bottom: 1000px;
+}
+    #news-bar .item {
+        margin-bottom: 50px;
+    }
+
+        #news-bar .item .title {
+            color: #000;
+            font-size: 1.1em;
+            padding-bottom: 3px;
+        }
+
+        #news-bar .item .text {
+            color: #646464;
+            font-size: 0.9em;
+            max-height: 55px;
+            overflow: hidden;
+        }
+
+        #news-bar .item.read .title,
+        #news-bar .item.read .title a,
+        #news-bar .item.read .text,
+        #news-bar .item.read .meta {
+            color: #e1e1e1;
+        }
+
+#feeds-bar {
+    padding: 28px 20px 20px;
+    line-height: 2;
+}
+    #feeds-bar .item:first-child {
+        margin-bottom: 30px;
+    }
+    #feeds-bar .item {
+        font-size: 0.8em;
+        margin-bottom: 20px;
+    }
+        #feeds-bar .item .title {
+            float: left;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        #feeds-bar .item .counter {
+            float: right;
+        }
+
+        #feeds-bar .item .active {
+            font-weight: bold;
+        }
+
+#news-modal {
+
+}
+    #news-modal .modal-header {
+        border: 0;
+    }
+
+    #news-modal .item .title {
+        font-size: 1.6em;
+        padding: 20px 20px 0 20px;
+    }
+
+    #news-modal .item .text {
+        padding: 0 20px 40px 20px;
+    }
+
+    #news-modal .item .text img {
+        display: block;
+        max-width: 100%;
+        margin: 30px 0;
+    }
+

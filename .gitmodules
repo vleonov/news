@@ -1,0 +1,3 @@
+[submodule "lib/fx"]
+	path = lib/fx
+	url = git@github.com:vleonov/fx.git
