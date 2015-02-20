@@ -5,6 +5,9 @@ class U_Rss
     private static $instances = array();
 
     private $url;
+    private $xml;
+
+    private $contentNS = 'http://purl.org/rss/1.0/modules/content/';
 
     private function __construct($url)
     {
@@ -13,9 +16,9 @@ class U_Rss
             $curl,
             array(
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_AUTOREFERER => true,
+                CURLOPT_AUTOREFERER    => true,
                 CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_TIMEOUT => 10,
+                CURLOPT_TIMEOUT        => 10,
             )
         );
 
@@ -23,7 +26,7 @@ class U_Rss
         $info = curl_getinfo($curl);
 
         if (!$response || $info['http_code'] != 200) {
-            throw new Exception('Error getting feed ', $url);
+            throw new Exception('Error getting feed ' . $url);
         }
 
         $xml = new DOMDocument();
@@ -70,14 +73,48 @@ class U_Rss
         return $channel->getElementsByTagName('description')->item(0)->nodeValue;
     }
 
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        /**
+         * @var $channels DOMNodeList
+         */
+        $channels = $this->xml->getElementsByTagName('channel');
+        if (!$channels || !$channels->length) {
+            return 'ru'; // @todo !!!
+        }
+
+        /**
+         * @var $language DOMNodeList
+         */
+        $language = $channels->item(0)->getElementsByTagName('language');
+
+        if (!$language->length) {
+            return 'ru'; // @todo !!!
+        }
+
+        return $language->item(0)->nodeValue;
+    }
+
     public function getItems()
     {
         $result = [];
 
         /**
+         * @var $channels DOMNodeList
+         */
+        $channels = $this->xml->getElementsByTagName('channel');
+        if (!$channels || !$channels->length) {
+            return $result;
+        }
+
+        /**
          * @var $channel DOMElement
          */
-        $channel = $this->xml->getElementsByTagName('channel')->item(0);
+        $channel = $channels->item(0);
+
         $items = $channel->getElementsByTagName('item');
 
         /**
@@ -89,16 +126,12 @@ class U_Rss
             $url = $item->getElementsByTagName('link')->item(0);
             $pubDate = $item->getElementsByTagName('pubDate')->item(0);
             $categories = $item->getElementsByTagName('category');
-//            $content = $item->getElementsByTagNameNS("http://purl.org/rss/1.0/modules/content/", 'content');
-//
-//            var_dump($title);
-//            var_dump($content);
-//
-//            exit();
+            $content = $item->getElementsByTagNameNS($this->contentNS, 'encoded');
 
             $item = array(
-                'title' => $title ? $title->nodeValue : 'n/a',
-                'descr'  => $descr ? $descr->nodeValue : 'n/a',
+                'title' => $title ? $title->nodeValue : '',
+                'descr'  => $descr ? $descr->nodeValue : '',
+                'content'  => $content->length ? $content->item(0)->nodeValue : '',
                 'url' => $url ? $url->nodeValue : null,
                 'pubDate' => $pubDate ? strtotime($pubDate->nodeValue) : time(),
                 'tags' => array(),

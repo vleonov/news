@@ -71,7 +71,7 @@ CREATE TABLE `news_news` (
   `id` serial not null,
   `feedId` bigint(20) unsigned not null,
   `url` varchar(255) not null,
-  `url_crc32` varchar(32) not null unique,
+  `url_crc32` varchar(32) not null,
   `title` varchar(255) not null,
   `descr` text,
   `content` text,
@@ -80,6 +80,7 @@ CREATE TABLE `news_news` (
   `publicatedAt` timestamp not null,
   `isProcessed` tinyint not null default 0,
   PRIMARY KEY (`id`),
+  UNIQUE KEY (`feedId`, `url_crc32`),
   FOREIGN KEY (feedId) REFERENCES news_feeds(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

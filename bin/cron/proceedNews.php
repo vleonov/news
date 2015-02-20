@@ -8,7 +8,8 @@ Bootstrap::run($configFilename);
 
 $news = new L_News(
     array('isProcessed' => false),
-    array('publicatedAt asc')
+    array('publicatedAt asc'),
+    10000
 );
 
 /**
@@ -46,7 +47,8 @@ foreach ($news as $new) {
     $mWords = array();
     $tmpWords = new L_Words(
         array('word' => $wordTexts),
-        array('freqS asc')
+        array('freqS asc'),
+        1e6
     );
 
     foreach ($tmpWords as $mWord) {
@@ -276,14 +278,6 @@ function calculateCoeff(array $mWords, array $texts, M_News $new)
             )
         );
     }
-
-    $db->exec(
-        sprintf(
-            'insert into news_users_unread (userId, newsId) (select userId, %d from news_users_feeds where feedId=%d) on duplicate key update newsId=VALUES(newsId)',
-            $new->id,
-            $new->feedId
-        )
-    );
 
     $new->isProcessed = true;
     $new->save();

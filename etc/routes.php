@@ -2,7 +2,7 @@
 
 return array(
 
-    '/(?<id>\d+/)?' => array(
+    '/((?<id>\d+)/)?' => array(
         'Main',
     ),
 
@@ -11,6 +11,10 @@ return array(
     ),
     '/feed/(?<id>\d+)/' => array(
         'Feed',
+    ),
+
+    '/news/list/((?<feedId>\d+)/)?' => array(
+        'News' => 'main',
     ),
 
     '/news/(?<id>\d+)/' => array(

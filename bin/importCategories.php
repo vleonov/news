@@ -8,16 +8,8 @@ Bootstrap::run($configFilename);
 
 $db = Database::get();
 
-$time = microtime(true);
-$categoriesList = new L_Categories(array(1), array(), 1e6);
-$categories = array();
 $ancestors = array();
-foreach ($categoriesList as $category) {
-    $categories[$category->title] = $category->id;
-    $ancestors[$category->id] = array_filter(explode(',', $category->path));
-}
-
-echo 'Categories: ' . (microtime(true) - $time)."\n";
+$categories = array();
 
 do {
     $time = microtime(true);
@@ -45,10 +37,10 @@ do {
         $categoryIds = array();
         foreach ($wCategories as $categoryPageName) {
             $title = getTitle($categoryPageName);
-            if (isset($categories[$title])) {
-                $categoryId = $categories[$title];
+            if ($cached = getCategoryCache($title)) {
+                $categoryId = $cached[0];
             } else {
-                list($categoryId, ) = getCategory($categoryPageName, $categories, $ancestors);
+                list($categoryId, ) = getCategory($categoryPageName);
                 if ($categoryId == null) {
                     continue;
                 }
@@ -77,6 +69,7 @@ do {
             $res = $db->query($sql);
 
             $values = array();
+            $freqs = array();
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
                 $values[] = sprintf(
                     '(%d, %d, %d)',
@@ -84,10 +77,28 @@ do {
                     $row['cnt'],
                     $row['cnt']
                 );
+                foreach ($ancestors[$row['categoryId']] as $ancestorId) {
+                    $freqs[$ancestorId] = max($row['cnt'], U_Misc::is($freqs[$ancestorId]));
+                }
             }
 
             $sql = sprintf(
                 'insert into news_categories (id, freq, freqS) values %s on duplicate key update freq=VALUES(freq), freqS=VALUES(freqS)',
+                implode(',', $values)
+            );
+            $db->exec($sql);
+
+            $values = array();
+            foreach ($freqs as $ancestorId=>$freq) {
+                $values[] = sprintf(
+                    '(%d, %d)',
+                    $ancestorId,
+                    $freq
+                );
+            }
+
+            $sql = sprintf(
+                'insert into news_categories (id, freqS) values %s on duplicate key update freqS=GREATEST(freqS, VALUES(freqS))',
                 implode(',', $values)
             );
             $db->exec($sql);
@@ -170,7 +181,7 @@ function getCategories($title)
     return $result;
 }
 
-function getCategory($pageName, &$categories, &$ancestors, $proceeded = array(), $i = 0)
+function getCategory($pageName, $proceeded = array(), $i = 0)
 {
     if (in_array($pageName, $proceeded)) {
         return array(null, array());
@@ -184,17 +195,16 @@ function getCategory($pageName, &$categories, &$ancestors, $proceeded = array(),
     $ancestorIds = array();
     foreach ($parents as $parentPageName) {
         $parentTitle = getTitle($parentPageName);
-        if (!isset($categories[$parentTitle])) {
-            list($parentId, $grandParentIds) = getCategory($parentPageName, $categories, $ancestors, $proceeded, $i+1);
-            $ancestorIds = array_merge($ancestorIds, $grandParentIds);
+        if ($cached = getCategoryCache($parentTitle)) {
+            $parentId = $cached[0];
+            $ancestorIds = array_merge($ancestorIds, $cached[1]);
         } else {
-            $parentId = $categories[$parentTitle];
-            $ancestorIds = array_merge($ancestorIds, $ancestors[$parentId]);
+            list($parentId, $grandParentIds) = getCategory($parentPageName, $proceeded, $i+1);
+            $ancestorIds = array_merge($ancestorIds, $grandParentIds);
         }
         $ancestorIds[] = $parentId;
         $parentIds[] = $parentId;
     }
-
 
     $ancestorIds = array_filter($ancestorIds);
     $parentIds = array_filter($parentIds);
@@ -239,8 +249,7 @@ function getCategory($pageName, &$categories, &$ancestors, $proceeded = array(),
         }
     }
 
-    $categories[$category->title] = $category->id;
-    $ancestors[$category->id] = $ancestorIds;
+    setCategoryCache($category);
 
     return array($category->id, $ancestorIds);
 }
@@ -248,4 +257,33 @@ function getCategory($pageName, &$categories, &$ancestors, $proceeded = array(),
 function getTitle($pageName)
 {
     return preg_replace('/^категория\s*\:\s*/iu', '', $pageName);
+}
+
+function getCategoryCache($title)
+{
+    global $categories, $ancestors;
+    $titleHash = md5($title);
+
+    if (isset($categories[$titleHash])) {
+        return [$categories[$titleHash], $ancestors[$categories[$titleHash]]];
+    }
+
+    $existed = new L_Categories(array('title' => $title));
+    if ($existed->length) {
+        $category = $existed->current();
+        $categories[$titleHash] = $category->id;
+        $ancestors[$category->id] = array_filter(explode(',', $category->path));
+        return [$categories[$titleHash], $ancestors[$categories[$titleHash]]];
+    }
+
+    return null;
+}
+
+function setCategoryCache($category)
+{
+    global $categories, $ancestors;
+    $titleHash = md5($category->title);
+
+    $categories[$titleHash] = $category->id;
+    $ancestors[$category->id] = array_filter(explode(',', $category->path));
 }

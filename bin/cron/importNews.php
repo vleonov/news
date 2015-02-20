@@ -12,9 +12,17 @@ $feeds = new L_Feeds(array('1'));
  * @var M_Feed $feed
  */
 foreach ($feeds as $feed) {
-    $rss = U_Rss::i($feed->url);
 
-    $items = $rss->getItems();
+    echo $feed->id." ".$feed->title."\n\n";
+
+    try {
+        $rss = U_Rss::i($feed->url);
+        $items = $rss->getItems();
+    } catch (Exception $e) {
+        echo "ERROR: " . $feed->url . "\n" . $e->getMessage() . "\n\n";
+        continue;
+    }
+
     $urlCrc32s = array();
     foreach ($items as $i => $item) {
         if (!$item['url']) {
@@ -49,11 +57,26 @@ foreach ($feeds as $feed) {
     foreach ($items as $item) {
         if (isset($urlToNews[$item['url_crc32']])) {
             $news = $urlToNews[$item['url_crc32']];
+            $news->content = $item['content'] ? $item['content'] : $news->content;
+
+            $existed = true;
         } else {
             $news = new M_News();
             $news->feedId = $feed->id;
             $news->url = $item['url'];
             $news->url_crc32 = $item['url_crc32'];
+            $news->content = $item['content'];
+
+            $existed = false;
+        }
+
+        if (!$news->content) {
+            try {
+                $parser = U_PageParser::i($news->url);
+                $news->content = html_entity_decode($parser->getContent());
+            } catch (Exception $e) {
+                echo "ERROR: " . $news->url . "\n" . $e->getMessage() . "\n\n";
+            }
         }
 
         $news->title = $item['title'];
@@ -61,6 +84,28 @@ foreach ($feeds as $feed) {
         $news->publicatedAt = $item['pubDate'];
         $news->tags = $item['tags'];
 
-        $news->save();
+        $language = preg_match('/[а-яА-Я]/iu', $news->title . ' ' . $news->descr) ? 'ru' : 'hz';
+        if (!$existed) {
+            $news->isProcessed = $language != 'ru';
+        }
+
+        echo $language." ".$news->isProcessed."   ";
+
+        try {
+            $news->save();
+        } catch (Exception $e) {
+            echo "ERROR: " . $news->url . "\n" . $e->getMessage() . "\n\n";
+            continue;
+        }
+
+        if (!$existed) {
+            Database::get()->exec(
+                sprintf(
+                    'insert into news_users_unread (userId, newsId) (select userId, %d from news_users_feeds where feedId=%d) on duplicate key update newsId=VALUES(newsId)',
+                    $news->id,
+                    $news->feedId
+                )
+            );
+        }
     }
 }

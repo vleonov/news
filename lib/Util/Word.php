@@ -101,7 +101,7 @@ class U_Word
 
     public function isNumeric()
     {
-        return preg_match('/^([\$\%]?[\d\.\,\/\-]+(\$|\%|K|К|М|M|\-[а-я]+)?)$/iu', $this->text);
+        return preg_match('/^([\$\%\€]?[\d\.\,\/\-]+(\$|\%|\€|K|К|М|M|\-[а-я]+)?)$/iu', $this->text);
     }
 
     public function isRussian()

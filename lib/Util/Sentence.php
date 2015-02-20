@@ -8,7 +8,7 @@ class U_Sentence
     private $words;
 
     private $whiteSymbols = "(\.|,|;|:|\?|\!|\-|\/|\&|)+([ \t\n\r\s]|$)";
-    private $decorSymbols = "[\'\"«»\(\)\[\]{}<>\—]";
+    private $decorSymbols = "[\'\"«»“”\(\)\[\]{}<>\—]";
 
     private function __construct($text)
     {

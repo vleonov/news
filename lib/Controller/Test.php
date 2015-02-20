@@ -4,7 +4,12 @@ class C_Test extends Controller
 {
     public function main()
     {
-        $feedUrl = Request()->get('feed', 'http://news/lenta.ru.xhtml');
+        $feedUrl = Request()->get('feed', 'https://xakep.ru/feed/');
+
+        $rss = U_Rss::i($feedUrl);
+
+var_dump($rss->getItems());
+        exit();
 
         $curl = curl_init($feedUrl);
         curl_setopt_array(

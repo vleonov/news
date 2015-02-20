@@ -28,6 +28,26 @@ a {
         border-bottom: 1px solid #f0b2b2;
     }
 
+a.block,
+a.block:focus,
+a.block:active,
+a.block:hover {
+    display: block;
+    border-bottom: 0;
+}
+    a.block span {
+        border-bottom: 1px solid #c0c0c0;;
+    }
+        a.block.no-underline span {
+            border-bottom: 0;
+        }
+
+    a.block:focus span,
+    a.block:active span,
+    a.block:hover span {
+        border-bottom: 1px solid #f0b2b2;
+    }
+
 .modal-rz {
     min-width: 800px;
 }
@@ -58,7 +78,7 @@ a {
         #news-bar .item .title {
             color: #000;
             font-size: 1.1em;
-            padding-bottom: 3px;
+            margin-bottom: 3px;
         }
 
         #news-bar .item .text {
@@ -66,7 +86,19 @@ a {
             font-size: 0.9em;
             max-height: 55px;
             overflow: hidden;
+            margin-bottom: 4px;
         }
+
+        #news-bar .item .meta {
+            color: #888;
+            font-size: 0.8em;
+        }
+            #news-bar .item .meta span {
+                margin-right: 5px;
+            }
+                #news-bar .item .meta span.dot:after {
+                    content: '·';
+                }
 
         #news-bar .item.read .title,
         #news-bar .item.read .title a,
@@ -74,20 +106,24 @@ a {
         #news-bar .item.read .meta {
             color: #e1e1e1;
         }
+            #news-bar .item.read .title a:focus span,
+            #news-bar .item.read .title a:active span,
+            #news-bar .item.read .title a:hover span {
+                border-bottom: 1px solid #e1e1e1;
+            }
 
 #feeds-bar {
     padding: 28px 20px 20px;
     line-height: 2;
 }
     #feeds-bar .item:first-child {
-        margin-bottom: 30px;
+        margin-bottom: 10px;
     }
     #feeds-bar .item {
         font-size: 0.8em;
-        margin-bottom: 20px;
     }
-        #feeds-bar .item .title {
-            float: left;
+        #feeds-bar .item .title,
+        #feeds-bar .item .title a {
             max-width: 200px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -110,11 +146,11 @@ a {
 
     #news-modal .item .title {
         font-size: 1.6em;
-        padding: 20px 20px 0 20px;
+        padding: 20px 46px 0 46px;
     }
 
     #news-modal .item .text {
-        padding: 0 20px 40px 20px;
+        padding: 0 50px 40px 50px;
     }
 
     #news-modal .item .text img {
@@ -123,3 +159,15 @@ a {
         margin: 30px 0;
     }
 
+    #news-modal .modal-footer a {
+        display: block;
+        border-radius: 4px;
+        margin: 0 auto;
+        padding: 15px;
+        text-align: center;
+        width: 70%;
+    }
+
+    #news-modal .modal-footer a:hover {
+        background-color: #f7f8f7;
+    }

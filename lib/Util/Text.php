@@ -11,7 +11,9 @@ class U_Text
 
     private function __construct($text)
     {
-        $this->text = (string) html_entity_decode(strip_tags($text));
+        $text = html_entity_decode($text);
+        $text = preg_replace('~(\<\s*br\s*/?\s*\>|\<[^>]/\>)~iu', "$1\n", $text);
+        $this->text = (string) strip_tags($text);
     }
 
     /**

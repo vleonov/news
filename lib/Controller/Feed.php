@@ -30,6 +30,10 @@ class C_Feed
         }
 
         $feedUrl = Request()->post('feedUrl');
+        if (!$feedUrl) {
+            return Response()->redirect(Request()->backUrl());
+        }
+
         $feedCrc32 = crc32($feedUrl);
 
         $existed = new L_Feeds(array('url_crc32' => $feedCrc32));
@@ -53,6 +57,6 @@ class C_Feed
         $userFeed->feedId = $feed->id;
         $userFeed->save();
 
-        return Response()->redirect('/feed/' . $feed->id);
+        return Response()->redirect('/' . $feed->id);
     }
 }
