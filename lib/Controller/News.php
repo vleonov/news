@@ -113,7 +113,7 @@ class C_News
             USER_ID,
             $news->id
         );
-        $res = 0;//$oDb->exec($sql);
+        $res = $oDb->exec($sql);
 
         if ($res) {
             $sql = sprintf(
