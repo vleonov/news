@@ -100,7 +100,7 @@ class U_Rss
 
     public function getItems()
     {
-        $result = [];
+        $result = array();
 
         /**
          * @var $channels DOMNodeList

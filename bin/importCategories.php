@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/local/bin/php
 <?php
 
 require_once dirname(__FILE__) . '/../lib/fx/Bootstrap.php';
@@ -265,7 +265,7 @@ function getCategoryCache($title)
     $titleHash = md5($title);
 
     if (isset($categories[$titleHash])) {
-        return [$categories[$titleHash], $ancestors[$categories[$titleHash]]];
+        return array($categories[$titleHash], $ancestors[$categories[$titleHash]]);
     }
 
     $existed = new L_Categories(array('title' => $title));
@@ -273,7 +273,7 @@ function getCategoryCache($title)
         $category = $existed->current();
         $categories[$titleHash] = $category->id;
         $ancestors[$category->id] = array_filter(explode(',', $category->path));
-        return [$categories[$titleHash], $ancestors[$categories[$titleHash]]];
+        return array($categories[$titleHash], $ancestors[$categories[$titleHash]]);
     }
 
     return null;

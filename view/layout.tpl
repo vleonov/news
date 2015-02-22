@@ -8,14 +8,14 @@
 
     <base href="{$BaseHref}">
 
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/base.css" rel="stylesheet">
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=cyrillic-ext,latin' rel='stylesheet' type='text/css'>
     {block "css"}{/block}
 
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/reader.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/reader.js"></script>
     {block "js"}{/block}
 
   </head>

@@ -16,7 +16,7 @@
                     {if !$feedId}
                         <span class="active">Всё</span>
                     {else}
-                        <a class="block no-underline" href="/"><span>Всё</span></a>
+                        <a class="block no-underline" href="./"><span>Всё</span></a>
                     {/if}
                 </div>
             </div>
@@ -27,7 +27,7 @@
                         {if $feedId && $feed->id == $feedId}
                             <span class="active">{$feed->title}</span>
                         {else}
-                            <a class="block no-underline" href="/{$feed->id}/"><span>{$feed->title}</span></a>
+                            <a class="block no-underline" href="./{$feed->id}/"><span>{$feed->title}</span></a>
                         {/if}
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 {foreach from=$news item=new}
     <div class="item {if !$isUnread}read{/if}" data-id="{$new->id}" data-feed-id="{$new->feedId}" data-publicated-at="{$new->publicatedAt|date_format:'U'}">
         <div class="title">
-            <a href="/news/{$new->id}/go" target="_blank" class="block no-underline"><span>{$new->title|escape}</span></a>
+            <a href="./news/{$new->id}/go" target="_blank" class="block no-underline"><span>{$new->title|escape}</span></a>
         </div>
         <div class="text">
             {$new->descr|strip_tags}
