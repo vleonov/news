@@ -16,10 +16,10 @@ $( function() {
 
     config = $.extend(
         {
-            'urlSkip': '/news/%d/markRead/m',
-            'urlRead': '/news/%d/markRead/p',
-            'urlGet': '/news/%d',
-            'urlList': '/news/list/%d',
+            'urlSkip': './news/%d/markRead/m',
+            'urlRead': './news/%d/markRead/p',
+            'urlGet': './news/%d',
+            'urlList': './news/list/%d',
             moreCount: 5,
             isUnread: true,
             feedId: null,
