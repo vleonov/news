@@ -73,7 +73,7 @@ foreach ($feeds as $feed) {
         if (!$news->content) {
             try {
                 $parser = U_PageParser::i($news->url);
-                $news->content = html_entity_decode($parser->getContent());
+                $news->content = html_entity_decode($parser->getContent(), null, 'UTF-8');
             } catch (Exception $e) {
                 echo "ERROR: " . $news->url . "\n" . $e->getMessage() . "\n\n";
             }
