@@ -10,6 +10,9 @@ body {
 .navbar {
     margin-bottom: 0;
 }
+    .navbar-toggle {
+        padding: 6px 10px;
+    }
 
 a {
     color: #333333;
@@ -54,16 +57,17 @@ a.block:hover {
 
 #left-bar {
     background-color: #eee;
+    display: none;
     height: 100%;
     left: 0;
     overflow: auto;
     position: fixed;
     top: 50px;
-    width: 270px;
+    width: 170px;
 }
 
 #content-bar {
-    margin-left: 330px;
+    margin-left: 0px;
     padding: 27px 30px 0 30px;
 }
 
@@ -124,7 +128,7 @@ a.block:hover {
     }
         #feeds-bar .item .title,
         #feeds-bar .item .title a {
-            max-width: 200px;
+            max-width: 100px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -171,3 +175,28 @@ a.block:hover {
     #news-modal .modal-footer a:hover {
         background-color: #f7f8f7;
     }
+
+@media (min-width: 480px) {
+    #left-bar {
+        display: block;
+    }
+
+    #content-bar {
+        margin-left: 170px;
+    }
+}
+
+@media (min-width: 768px) {
+    #left-bar {
+        width: 270px;
+    }
+
+    #content-bar {
+        margin-left: 330px;
+    }
+
+    #feeds-bar .item .title,
+    #feeds-bar .item .title a {
+        max-width: 200px;
+    }
+}
