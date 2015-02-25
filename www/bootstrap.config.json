@@ -35,7 +35,7 @@
     "@headings-font-weight": "500",
     "@headings-line-height": "1.1",
     "@headings-color": "inherit",
-    "@icon-font-path": "\"../fonts\"",
+    "@icon-font-path": "\"../fonts/\"",
     "@icon-font-name": "\"glyphicons-halflings-regular\"",
     "@icon-font-svg-id": "\"glyphicons_halflingsregular\"",
     "@padding-base-vertical": "6px",
@@ -412,8 +412,18 @@
     "carousel.less"
   ],
   "js": [
+    "alert.js",
+    "button.js",
+    "carousel.js",
+    "dropdown.js",
     "modal.js",
-    "collapse.js"
+    "tooltip.js",
+    "popover.js",
+    "tab.js",
+    "affix.js",
+    "collapse.js",
+    "scrollspy.js",
+    "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=2e5b4b56298ce3e75138"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=9f02202f724c0ecc5abd"
 }
