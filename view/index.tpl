@@ -8,6 +8,10 @@
         {rdelim}
     </script>
 
+    <div id="left-bar-switch">
+        <span class="glyphicon glyphicon-option-vertical"></span>
+    </div>
+
     <div id="left-bar">
         <div id="feeds-bar">
             <div class="item">

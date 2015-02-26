@@ -62,6 +62,9 @@ a.block:hover {
 
 #left-bar {
     background-color: #eee;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
     display: none;
     height: 100%;
     left: 0;
@@ -70,10 +73,30 @@ a.block:hover {
     top: 0;
     width: 170px;
 }
+    #left-bar.expanded,
+    #left-bar:hover {
+        display: block;
+    }
+
+#left-bar-switch {
+    background-color: #eee;
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    padding-top: 50px;
+    position: fixed;
+    top: 0;
+    width: 20px;
+}
+    #left-bar-switch span {
+        padding-top: 20px;
+        color: #c4c4c4;
+        font-size: 1.5em;
+    }
 
 #content-bar {
-    margin-left: 0px;
-    padding: 27px 30px 0 30px;
+    margin-left: 10px;
+    padding: 17px 25px 0 25px;
 }
 
 #news-bar {
@@ -125,7 +148,7 @@ a.block:hover {
     height: 100%;
     line-height: 2;
     overflow: auto;
-    padding: 25px 20px 20px;
+    padding: 18px 20px 20px;
 }
     #feeds-bar .item:first-child {
         margin-bottom: 10px;
@@ -188,7 +211,13 @@ a.block:hover {
 
 @media (min-width: 480px) {
     #left-bar {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
         display: block;
+    }
+    #left-bar-switch {
+        display: none;
     }
 
     #content-bar {

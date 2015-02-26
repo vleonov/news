@@ -16,6 +16,7 @@
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/reader.js"></script>
+    <script src="./js/switcher.js"></script>
     {block "js"}{/block}
 
   </head>
