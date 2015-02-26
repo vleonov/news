@@ -39,7 +39,7 @@ $( function() {
     {
         var $news,
             offset,
-            scrolled = $('html').scrollTop();
+            scrolled = window.pageYOffset;
 
         $('#news-bar .item:not(".scrolled")').each(function() {
             $news = $(this);

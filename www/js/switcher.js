@@ -4,12 +4,12 @@ $( function() {
     var $leftBar = $('#left-bar'),
         $leftBarSwitcher = $('#left-bar-switch');
 
-    $leftBarSwitcher.on('click', switchToggle)
+    $leftBarSwitcher.on('click touchend', switchToggle)
         .on('mouseover', switchOn);
 
     $leftBar.on('mouseout', switchOff);
 
-    $(document).on('click', switchOff);
+    $(document).on('click touchend', switchOff);
 
     function switchToggle(e)
     {
