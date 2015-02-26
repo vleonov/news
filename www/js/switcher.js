@@ -9,9 +9,12 @@ $( function() {
 
     $leftBar.on('mouseout', switchOff);
 
-    function switchToggle()
+    $(document).on('click', switchOff);
+
+    function switchToggle(e)
     {
         $leftBar.toggleClass('expanded');
+        e.stopPropagation();
     }
 
     function switchOn()
