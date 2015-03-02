@@ -4,7 +4,7 @@
             <a href="./news/{$new->id}/go" target="_blank" class="block no-underline"><span>{$new->title|escape}</span></a>
         </div>
         <div class="text">
-            {$new->descr|strip_tags}
+            {$new->descr|strip_tags|trim|regex_replace:"/(^&nbsp;|&nbsp;$)/":""}
         </div>
         <div class="meta">
             <span>{$feeds[$new->feedId]->title}</span>
