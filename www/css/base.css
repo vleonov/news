@@ -181,12 +181,12 @@ a.block:hover {
         border: 0;
     }
 
-    #news-modal .item .title {
+    #news-modal>div>.item>div>.title {
         font-size: 1.6em;
         padding: 20px 46px 0 46px;
     }
 
-    #news-modal .item .text {
+    #news-modal>div>.item>div>.text {
         padding: 0 50px 40px 50px;
     }
 
