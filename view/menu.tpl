@@ -7,9 +7,11 @@
                 <span class="sr-only">Добавить RSS-ленту</span>
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
-            <a href="./" class="navbar-brand no-underline">
-                news
-            </a>
+            <div class="navbar-brand">
+                <a href="./" class="no-underline">
+                    news
+                </a>
+            </div>
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse">
             <ul class="nav navbar-nav navbar-right">

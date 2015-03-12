@@ -10,9 +10,38 @@ body {
 .navbar {
     margin-bottom: 0;
 }
-    .navbar-toggle {
-        padding: 6px 10px;
+    .navbar-title {
+        white-space: nowrap;
     }
+    .navbar-title .navbar-divider:before {
+        content: ":";
+        padding-right: 0px;
+    }
+    .navbar-buttons {
+        -webkit-box-shadow: -18px -7px 10px rgba(248, 248, 248, 1);
+        -moz-box-shadow: -18px -7px 10px rgba(248, 248, 248, 1);
+        box-shadow: -18px -7px 10px rgba(248, 248, 248, 1);
+        background-color: #f8f8f8;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+        .navbar-buttons.collapsing,
+        .navbar-buttons.in {
+            -webkit-box-shadow: 0 0 0 0;
+            -moz-box-shadow: 0 0 0 0;
+            box-shadow: 0 0 0 0;
+            position: relative;
+            top: auto;
+            right: auto;
+        }
+        .navbar-buttons .navbar-toggle {
+            margin: 5px 15px 4px 15px;
+        }
+            .navbar-buttons button.navbar-toggle {
+                background-color: #fff;
+            }
 
 .modal-backdrop {
     position: fixed;
@@ -223,6 +252,10 @@ a.block:hover {
     #content-bar {
         margin-left: 170px;
     }
+
+    .navbar-title .navbar-divider:before {
+        padding-right: 5px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -237,5 +270,20 @@ a.block:hover {
     #feeds-bar .item .title,
     #feeds-bar .item .title a {
         max-width: 200px;
+    }
+
+    .navbar-title .navbar-divider:before {
+        padding-right: 12px;
+    }
+
+    .navbar-buttons.collapsing,
+    .navbar-buttons.in {
+        -webkit-box-shadow: -18px -7px 10px rgba(248, 248, 248, 1);
+        -moz-box-shadow: -18px -7px 10px rgba(248, 248, 248, 1);
+        box-shadow: -18px -7px 10px rgba(248, 248, 248, 1);
+        background-color: #f8f8f8;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 }

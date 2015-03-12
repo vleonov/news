@@ -1,5 +1,12 @@
 {extends file='layout.tpl'}
 
+{block "navbar-title"}
+    {if $feedId}
+        <span class="navbar-divider"></span>
+        {$feeds[$feedId]->title}
+    {/if}
+{/block}
+
 {block "content"}
     <script language="JavaScript">
         config = {ldelim}
